@@ -1,0 +1,5 @@
+../../../../../qooxdoo-0.7.2-sdk/frontend/framework/tool/generator.py --class-path source/class --generate-compiled-script --compiled-script-file ZoneManager.js
+
+cp ZoneManager.js ../../../../build/packages/com/makeabyte/vhf/powerdns/ui/
+
+rm ZoneManager.js

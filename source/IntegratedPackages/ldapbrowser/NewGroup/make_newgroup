@@ -1,0 +1,5 @@
+../../../../../qooxdoo-0.7.2-sdk/frontend/framework/tool/generator.py --class-path source/class --generate-compiled-script --compiled-script-file NewGroup.js
+
+cp NewGroup.js ../../../../build/packages/com/makeabyte/vhf/ldapbrowser/ui/
+
+rm NewGroup.js

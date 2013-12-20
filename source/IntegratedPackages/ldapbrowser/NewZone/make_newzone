@@ -1,0 +1,5 @@
+../../../../../qooxdoo-0.7.2-sdk/frontend/framework/tool/generator.py --class-path source/class --generate-compiled-script --compiled-script-file NewZone.js
+
+cp NewZone.js ../../../../build/packages/com/makeabyte/vhf/ldapbrowser/ui/
+
+rm NewZone.js

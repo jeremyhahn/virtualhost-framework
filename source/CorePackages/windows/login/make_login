@@ -1,0 +1,5 @@
+../../../../../qooxdoo-0.7.2-sdk/frontend/framework/tool/generator.py --class-path source/class --generate-compiled-script --compiled-script-file Login.js
+
+cp Login.js ../../../../build/packages/core/ui/window
+
+rm Login.js

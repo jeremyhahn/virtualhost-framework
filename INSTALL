@@ -1,0 +1,13 @@
+Operating System Requirements:
+------------------------------
+> Linux is the only supported operating system as of this alpha version.
+
+
+
+PHP Build Requirements:
+-----------------------
+> PHP Version 5
+> SSH
+> SOAP
+> JSON
+> (database extension for DB(s) being used)

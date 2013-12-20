@@ -1,0 +1,5 @@
+../../../../../qooxdoo-0.7.2-sdk/frontend/framework/tool/generator.py --class-path source/class --generate-compiled-script --compiled-script-file Tree.js
+
+cp Tree.js ../../../../build/packages/com/makeabyte/vhf/sqlbrowser/ui/contextmenu/
+
+rm Tree.js

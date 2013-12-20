@@ -1,0 +1,522 @@
+#
+# Virtual Host Framework Schema v1.0
+#
+# Created by: Jeremy Hahn <jeremy.hahn@makeabyte.com>
+# Created: Thursday, November 15th, 2007
+#
+# Note: The official Make-A-Byte, inc OID base is 1.3.6.1.4.1.29377
+#       The Virtual Host Framework OID base is is 1.3.6.1.4.1.29377.100
+#
+
+# Attribute Type Definitions
+
+## Package Attributes
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.1 NAME 'packageClasspath'
+        DESC 'The classpath of the package'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.2 NAME 'packageStatus'
+        DESC 'The status of the package: active, disabled'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.3 NAME 'packageType'
+        DESC 'The type of package (used for API packages)'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.4 NAME 'packageDTO'
+        DESC 'The classpath to a data type object associated with this package'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.5 NAME 'packageVersion'
+        DESC 'The verion of the package'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.6 NAME 'packageIcon'
+        DESC 'The path to the icon which represents this package'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+
+
+## Package Repository Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.0.7 NAME 'repositoryUrl'
+        DESC 'The URL for the package repository'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+
+## Account Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.1.1 NAME 'accountStatus'
+	DESC 'The status of a user account: active, disabled'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.1.2 NAME 'accountRole'
+        DESC 'The role of a user account: administrator, user'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.1.3 NAME 'passphrase'
+        DESC 'The passphrase used to encrypt/decrypt this users private data'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.1.4 NAME 'billingId'
+        DESC 'Specifies the billing identifier for this account'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.1.5 NAME 'serviceId'
+        DESC 'The identifier of a service which this user belongs'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+## Mail Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.1 NAME 'mailbox'
+        DESC 'The absolute path to the mailbox for a mail account in a non-default location'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.2 NAME 'mailAlternateAddress'
+        DESC 'Secondary (alias) mailaddresses for the same user'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.3 NAME 'mailQuota'
+        DESC 'A string that represents the quota on a mailbox'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.4 NAME 'clearPassword'
+        DESC 'A separate text that stores the mail account password in clear text'
+        EQUALITY octetStringMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.40{128})
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.5 NAME 'maildrop'
+        DESC 'RFC822 Mailbox - mail alias'
+        EQUALITY caseIgnoreIA5Match
+        SUBSTR caseIgnoreIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.10 NAME 'disableimap'
+        DESC 'Set this attribute to 1 to disable IMAP access'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.11 NAME 'disablepop3'
+        DESC 'Set this attribute to 1 to disable POP3 access'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.12 NAME 'disablewebmail'
+        DESC 'Set this attribute to 1 to disable IMAP access'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.15 NAME 'mailhost'
+        DESC 'Host to which incoming POP/IMAP connections should be proxied'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.16 NAME 'mailForwardingAddress'
+        DESC 'Address(es) to forward all incoming messages to.'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.17 NAME 'mailMessageStore'
+        DESC 'Path to the maildir/mbox on the mail system'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.18 NAME 'mailingListQuota'
+        DESC 'The maximum number of mailing lists which can be created'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.2.19 NAME 'mailboxQuota'
+        DESC 'The maximum number of mailboxes per domain which can be created'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+## DNS Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.1 NAME 'dnsQuota'
+        DESC 'The maximum number of DNS domains which can be created'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.2  NAME 'dNSTTL'
+	DESC 'An integer denoting time to live'
+	EQUALITY integerMatch
+	ORDERING integerOrderingMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.3 NAME 'dNSClass'
+	DESC 'The class of a resource record'
+	EQUALITY caseIgnoreIA5Match
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.4 NAME 'wKSRecord'
+	DESC 'a well known service description, RFC 1035'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.5 NAME 'pTRRecord'
+	DESC 'domain name pointer, RFC 1035'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.6 NAME 'hInfoRecord'
+	DESC 'host information, RFC 1035'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.7 NAME 'mInfoRecord'
+	DESC 'mailbox or mail list information, RFC 1035'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.8 NAME 'tXTRecord'
+	DESC 'text string, RFC 1035'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.9 NAME 'rPRecord'
+	DESC 'for Responsible Person, RFC 1183'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.10 NAME 'aFSDBRecord'
+	DESC 'for AFS Data Base location, RFC 1183'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.11 NAME 'SigRecord'
+	DESC 'Signature, RFC 2535'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.12 NAME 'KeyRecord'
+	DESC 'Key, RFC 2535'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.13 NAME 'gPosRecord'
+	DESC 'Geographical Position, RFC 1712'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.14 NAME 'aAAARecord'
+	DESC 'IPv6 address, RFC 1886'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.15 NAME 'LocRecord'
+	DESC 'Location, RFC 1876'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.16 NAME 'nXTRecord'
+	DESC 'non-existant, RFC 2535'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.17 NAME 'sRVRecord'
+	DESC 'service location, RFC 2782'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.18 NAME 'nAPTRRecord'
+	DESC 'Naming Authority Pointer, RFC 2915'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.19 NAME 'kXRecord'
+	DESC 'Key Exchange Delegation, RFC 2230'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.20 NAME 'certRecord'
+	DESC 'certificate, RFC 2538'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.21 NAME 'a6Record'
+	DESC 'A6 Record Type, RFC 2874'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.22 NAME 'dNameRecord'
+	DESC 'Non-Terminal DNS Name Redirection, RFC 2672'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.23 NAME 'aPLRecord'
+	DESC 'Lists of Address Prefixes, RFC 3123'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.24 NAME 'dSRecord'
+	DESC 'Delegation Signer, RFC 3658'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.25 NAME 'sSHFPRecord'
+	DESC 'SSH Key Fingerprint, RFC 4255'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.26 NAME 'iPSecKeyRecord'
+	DESC 'SSH Key Fingerprint, RFC 4025'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.27 NAME 'rRSIGRecord'
+	DESC 'RRSIG, RFC 3755'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.28 NAME 'nSECRecord'
+	DESC 'NSEC, RFC 3755'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.29 NAME 'dNSKeyRecord'
+	DESC 'DNSKEY, RFC 3755'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.30 NAME 'dHCIDRecord'
+	DESC 'DHCID, RFC 4701'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.31 NAME 'sPFRecord'
+	DESC 'Sender Policy Framework, RFC 4408'
+	EQUALITY caseIgnoreIA5Match
+	SUBSTR caseIgnoreIA5SubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.3.32 NAME 'dnsDynamicUpdates'
+        DESC 'Enables or disabled dynamic dns ability (active|disabled)'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+## Web Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.4.1 NAME 'webQuota'
+        DESC 'The maximum number of websites which can be created'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+## FTP Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.5.1 NAME 'ftpQuota'
+        DESC 'Quota for FTP directory'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.5.2 NAME 'ftpRoot'
+        DESC 'The users base ftp root directory'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+
+## Database Attributes
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.1 NAME 'databaseQuota'
+        DESC 'The maximum number of databases the user can create'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.2 NAME 'databaseHost'
+        DESC 'The hostname of the database server'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.3 NAME 'databasePort'
+        DESC 'The port number the database server listens'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.4 NAME 'databaseType'
+        DESC 'The type of SQL server'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.5 NAME 'databaseName'
+        DESC 'The name of the database this object represents'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.6 NAME 'databaseUsername'
+        DESC 'The username used to connect to the database'
+        EQUALITY caseIgnoreIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.7 NAME 'databasePassword'
+        DESC 'The password used to access the database'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.8 NAME 'databaseOptions'
+        DESC 'A list of options used in a connection string'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.6.9 NAME 'databaseOwner'
+        DESC 'The distinguished name of the account which owns this database object'
+        EQUALITY distinguishedNameMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 )
+
+
+
+
+## SUDO LDAP Attributes
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.7.1 NAME 'sudoUser'
+        DESC 'User(s) who may run sudo'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.7.2 NAME 'sudoHost'
+        DESC 'Host(s) who may run sudo'
+        EQUALITY caseExactIA5Match
+        SUBSTR caseExactIA5SubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.7.3 NAME 'sudoCommand'
+        DESC 'Command(s) to be executed by sudo'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.7.4 NAME 'sudoRunAs'
+        DESC 'User(s) impersonated by sudo'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.7.5 NAME 'sudoOption'
+        DESC 'Options(s) followed by sudo'
+        EQUALITY caseExactIA5Match
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+
+
+## Policy Attributes
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.8.1 NAME 'policyId'
+        DESC 'An identifier for this policy (serviceId if used with billing API)'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.8.2 NAME 'policyType'
+        DESC 'Intrenally used to link policies to their respective role within the framework'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.8.3 NAME 'policyCommand'
+        DESC 'Specifies an external command to run. Attribute values can be used as arguments using the following syntax:  %attributeName%'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.8.4 NAME 'policyHost'
+        DESC 'Specifies a host within the infrastructure which this policy applies'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.29377.100.1.8.5 NAME 'policyStatus'
+        DESC 'The status of the policy: (active|disabled)'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+
+## Object Class Definitions
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.1 NAME 'virtualHostFrameworkAccount'
+          DESC 'Virtual Host Framework User' SUP top AUXILIARY
+	  MUST ( accountStatus $ accountRole $ userPassword $ cn $ uid )
+          MAY ( mailMessageStore $ mailAlternateAddress $ mailQuota $ mail $
+	        mailForwardingAddress $ mailbox $ homeDirectory $ ftpQuota $
+                webQuota $ databaseQuota $ mailboxQuota $ mailingListQuota $
+                dnsQuota $ dnsDynamicUpdates $ clearPassword $ ftpRoot $ 
+ 		billingId $ serviceId $ passphrase ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.2 NAME 'virtualHostFrameworkPackage'
+         DESC 'Virtual Host Framework Package' SUP top AUXILIARY
+	 MUST ( packageClasspath $ packageStatus $ packageVersion )
+	 MAY ( description $ packageIcon $ packageType $ packageDTO ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.3 NAME 'virtualHostFrameworkRepository'
+         DESC 'Virtual Host Framework Repository'
+         MUST ( repositoryURL $ cn )
+         MAY ( ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.4 NAME 'virtualHostFrameworkDomain'
+	SUP 'dNSDomain' STRUCTURAL
+	MAY ( DNSTTL $ DNSClass $ WKSRecord $ PTRRecord $
+	      HINFORecord $ MINFORecord $ TXTRecord $ RPRecord $
+	      AFSDBRecord $ SIGRecord $ KEYRecord $ GPOSRecord $
+	      AAAARecord $ LOCRecord $ NXTRecord $ SRVRecord $
+	      NAPTRRecord $ KXRecord $ CERTRecord $ A6Record $
+	      DNAMERecord $ APLRecord $ DSRecord $ SSHFPRecord $
+	      IPSECKEYRecord $ RRSIGRecord $ NSECRecord $
+	      DNSKEYRecord $ DHCIDRecord $ SPFRecord $ accountStatus $
+              associatedName
+	) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.5 NAME 'virtualHostFrameworkDatabase'
+         DESC 'Virtual Host Framework Database' SUP top AUXILIARY
+         MUST ( databaseHost $ databasePort $ databaseType $ databaseName $ databaseOwner )
+         MAY ( databaseUsername $ databasePassword $ description $ databaseOptions ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.6 NAME 'virtualHostFrameworkMailingList'
+         DESC 'Virtual Host Framework Mailing List'
+         MUST ( mail $ member $ cn )
+         MAY ( description ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.7 NAME 'virtualHostFrameworkPolicy'
+         DESC 'Virtual Host Framework Policy'
+         MUST ( policyId $ PolicyType $ cn )
+         MAY ( policyCommand $ policyHost $ policyStatus $ description $
+               webQuota $ ftpQuota $ dnsQuota $ dnsDynamicUpdates $ 
+               databaseQuota $ mailboxQuota $ mailQuota $ mailingListQuota ) )
+
+objectclass ( 1.3.6.1.4.1.29377.100.1.100.9 NAME 'sudoRole' SUP top STRUCTURAL
+        DESC 'Sudoer Entries'
+        MUST ( cn )
+        MAY ( sudoUser $ sudoHost $ sudoCommand $ sudoRunAs $ sudoOption $description ) )
